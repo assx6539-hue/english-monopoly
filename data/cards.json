@@ -1,0 +1,25 @@
+{
+  "chance": [
+    {"id":"c1","icon":"🍀","title":"Lucky!","desc":"前進 3 格！","effect":"advance","value":3},
+    {"id":"c2","icon":"🛡️","title":"免答題卡","desc":"獲得 1 張免答題卡！下次踩到題目格時可使用。","effect":"immunity","value":1},
+    {"id":"c3","icon":"⚡","title":"幸運大躍進","desc":"前進 5 格，朝終點衝刺！","effect":"advance","value":5},
+    {"id":"c4","icon":"📚","title":"英文小知識","desc":"答對一題英文小知識，即可前進 2 格！","effect":"knowledgeBonus","value":2},
+    {"id":"c5","icon":"🔄","title":"交換位置","desc":"與下一位玩家交換位置！","effect":"swap","value":0},
+    {"id":"c6","icon":"✨","title":"再前進一點","desc":"前進 2 格！","effect":"advance","value":2}
+  ],
+  "destiny": [
+    {"id":"d1","icon":"💀","title":"Bad Luck!","desc":"退後 3 格⋯","effect":"back","value":3},
+    {"id":"d2","icon":"🚔","title":"直接進監獄","desc":"直接送往坐牢格！","effect":"goToJail","value":10},
+    {"id":"d3","icon":"😢","title":"踩到石頭","desc":"退後 2 格⋯","effect":"back","value":2},
+    {"id":"d4","icon":"😴","title":"讓人暫停","desc":"指定一位玩家暫停一回合！","effect":"skipOther","value":0},
+    {"id":"d5","icon":"📖","title":"翻譯挑戰","desc":"翻譯一段課文片段，答對前進 3 格，答錯退後 2 格！","effect":"hardTranslation","value":0},
+    {"id":"d6","icon":"🌧️","title":"下大雨","desc":"路況不好，退後 1 格⋯","effect":"back","value":1}
+  ],
+  "knowledgeQuestions": [
+    {"q":"What is the plural of 'criterion'?","a":"criteria"},
+    {"q":"Which tense: 'I wish I ______ (know) the answer.' Fill in.","a":"knew"},
+    {"q":"What does 'unprecedented' mean in Chinese?","a":"前所未有的"},
+    {"q":"What's the past participle of 'lie' (臥）?","a":"lain"},
+    {"q":"Complete: 'Neither he nor I ______ (be) ready.'","a":"am"}
+  ]
+}

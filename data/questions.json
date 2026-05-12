@@ -1,0 +1,391 @@
+{
+  "sentence": [
+    {
+      "id": "s1",
+      "word": "overflow",
+      "hint": "溢出；氾濫 — 充滿到溢出邊緣",
+      "example": "The heavy rain caused the river to overflow its banks."
+    },
+    {
+      "id": "s2",
+      "word": "narrow",
+      "hint": "狹窄的；窄小的 — having a short distance from one side to the other",
+      "example": "The alley was so narrow that only a very small car could drive along it."
+    },
+    {
+      "id": "s3",
+      "word": "extent",
+      "hint": "程度；限度 — the range or amount of something",
+      "example": "Helen was exhausted to such an extent that she fell asleep in the taxi."
+    },
+    {
+      "id": "s4",
+      "word": "decline",
+      "hint": "減少；衰退 — to decrease in size, strength, quality, or value",
+      "example": "The president's popularity declined sharply because of his political scandal."
+    },
+    {
+      "id": "s5",
+      "word": "dramatically",
+      "hint": "突然地；顯著地 — suddenly and in an obvious way",
+      "example": "The company's stock price fell dramatically after the new policy."
+    },
+    {
+      "id": "s6",
+      "word": "flock",
+      "hint": "蜂擁；聚集 — to come together or move in large groups",
+      "example": "In summer, people flock to the beaches, making them very crowded."
+    },
+    {
+      "id": "s7",
+      "word": "expansion",
+      "hint": "擴大；增加 — an increase in size, number, or degree",
+      "example": "The expansion of the house took several months to complete."
+    },
+    {
+      "id": "s8",
+      "word": "invasion",
+      "hint": "湧入；武裝入侵 — arrival of a large number of people or creatures",
+      "example": "Every summer, an invasion of tourists transforms this quiet seaside village."
+    },
+    {
+      "id": "s9",
+      "word": "complaint",
+      "hint": "抱怨；投訴 — a negative comment expressing dissatisfaction",
+      "example": "Mandy made a complaint to the manager about the rude behavior."
+    },
+    {
+      "id": "s10",
+      "word": "thoughtless",
+      "hint": "粗心的；欠考慮的 — not caring about others' feelings",
+      "example": "It was thoughtless of Jim to eat most of the pizza without asking others."
+    },
+    {
+      "id": "s11",
+      "word": "tenant",
+      "hint": "房客 — a person who pays to live in someone else's home",
+      "example": "Mrs. Jones asked her tenant to move out because he violated the no-pet policy."
+    },
+    {
+      "id": "s12",
+      "word": "landlord",
+      "hint": "房東；地主 — someone who owns property rented to others",
+      "example": "Brenda signed an agreement with her landlord before moving into the house."
+    },
+    {
+      "id": "s13",
+      "word": "partial",
+      "hint": "偏愛的；不完全的 — liking something very much, OR incomplete",
+      "example": "Many people are partial to chocolate ice cream, but Kelly doesn't like it."
+    },
+    {
+      "id": "s14",
+      "word": "measure",
+      "hint": "措施；方法 — an action used to achieve a goal",
+      "example": "The government needs to take measures to reduce air pollution."
+    },
+    {
+      "id": "s15",
+      "word": "thorough",
+      "hint": "全面的；徹底的 — done very carefully and in great detail",
+      "example": "The report was quite thorough; it examined every aspect of the issue."
+    },
+    {
+      "id": "s16",
+      "word": "strive",
+      "hint": "努力；奮鬥 — to try one's best to achieve something",
+      "example": "By practicing every day, Alice strove to become the fastest runner at school."
+    },
+    {
+      "id": "s17",
+      "word": "negative",
+      "hint": "壞的；有害的 — not good or causing harm",
+      "example": "Chronic overwork will have a negative impact on one's health."
+    },
+    {
+      "id": "s18",
+      "word": "overtourism",
+      "hint": "過度旅遊 — too many tourists overrunning a place",
+      "example": "Barcelona is suffering from a phenomenon called overtourism."
+    }
+  ],
+
+  "transform": [
+    {
+      "id": "t1",
+      "original": "The alarm will only go off if an earthquake is detected.",
+      "instruction": "改為 Only 開頭的倒裝句",
+      "answer": "Only if an earthquake is detected will the alarm go off."
+    },
+    {
+      "id": "t2",
+      "original": "We can only see this kind of insect in the Amazon rainforest.",
+      "instruction": "改為 Only 開頭的倒裝句",
+      "answer": "Only in the Amazon rainforest can we see this kind of insect."
+    },
+    {
+      "id": "t3",
+      "original": "The castle built on the rocky island is only accessible by boat.",
+      "instruction": "改為 Only 開頭的倒裝句",
+      "answer": "Only by boat is the castle built on the rocky island accessible."
+    },
+    {
+      "id": "t4",
+      "original": "Muslim women can only enter a mosque with all their skin covered.",
+      "instruction": "改為 Only 開頭的倒裝句",
+      "answer": "Only with all their skin covered can Muslim women enter a mosque."
+    },
+    {
+      "id": "t5",
+      "original": "Citizens of this country are allowed to vote only after they turn eighteen.",
+      "instruction": "改為 Only 開頭的倒裝句",
+      "answer": "Only after they turn eighteen are citizens of this country allowed to vote."
+    },
+    {
+      "id": "t6",
+      "original": "You can only cross the street when the traffic light turns green.",
+      "instruction": "改為 Only 開頭的倒裝句",
+      "answer": "Only when the traffic light turns green can you cross the street."
+    },
+    {
+      "id": "t7",
+      "original": "Orchid Island is sixteen times larger than Turtle Island.",
+      "instruction": "改為 'times as ... as ...' 倍數句型",
+      "answer": "Orchid Island is sixteen times as large as Turtle Island."
+    },
+    {
+      "id": "t8",
+      "original": "Imported apples cost three times more money than domestic ones.",
+      "instruction": "改為 'times as ... as ...' 倍數句型",
+      "answer": "Imported apples cost three times as much money as domestic ones."
+    },
+    {
+      "id": "t9",
+      "original": "The cheetah runs twice faster than a human being.",
+      "instruction": "改為 'times as ... as ...' 倍數句型",
+      "answer": "The cheetah can run twice as fast as a human being."
+    },
+    {
+      "id": "t10",
+      "original": "Mark behaves himself when his parents are around.",
+      "instruction": "改為 Only when 開頭的倒裝句",
+      "answer": "Only when Mark's parents are around does he behave himself."
+    },
+    {
+      "id": "t11",
+      "original": "The impact of overtourism can be reduced by introducing practical measures.",
+      "instruction": "改為 Only by 開頭的倒裝句",
+      "answer": "Only by introducing practical measures can the impact of overtourism be reduced."
+    },
+    {
+      "id": "t12",
+      "original": "Overtourism will be manageable after the authorities develop sustainable solutions.",
+      "instruction": "改為 Only after 開頭的倒裝句",
+      "answer": "Only after the authorities have developed sustainable solutions will overtourism be manageable."
+    }
+  ],
+
+  "translation": [
+    {
+      "id": "tr1",
+      "type": "c2e",
+      "source": "巴塞隆納正在遭受一種叫做「過度旅遊」的現象。",
+      "answer": "Barcelona is suffering from a phenomenon called \"overtourism.\""
+    },
+    {
+      "id": "tr2",
+      "type": "c2e",
+      "source": "居民們受夠了一些遊客不適當的行為。",
+      "answer": "Residents are fed up with some visitors' inappropriate behavior."
+    },
+    {
+      "id": "tr3",
+      "type": "c2e",
+      "source": "觀光業是一把雙面刃。",
+      "answer": "Tourism is a double-edged sword."
+    },
+    {
+      "id": "tr4",
+      "type": "c2e",
+      "source": "政府提出了一個全面的計畫。",
+      "answer": "The government has come up with a thorough plan."
+    },
+    {
+      "id": "tr5",
+      "type": "c2e",
+      "source": "只有透過引進實際措施，過度旅遊的影響才能被減少。",
+      "answer": "Only by introducing practical measures can the impact of overtourism be reduced."
+    },
+    {
+      "id": "tr6",
+      "type": "c2e",
+      "source": "1992 年奧運讓巴塞隆納登上了旅遊地圖。",
+      "answer": "The 1992 Olympics put Barcelona on the tourist map."
+    },
+    {
+      "id": "tr7",
+      "type": "c2e",
+      "source": "城市官員正試圖在當地社區與國際遊客之間取得平衡。",
+      "answer": "City officials are striving to strike a balance between the local community and international visitors."
+    },
+    {
+      "id": "tr8",
+      "type": "e2c",
+      "source": "The number of annual visitors to Barcelona grew to almost five times as large as that in 1992.",
+      "answer": "巴塞隆納每年的遊客人數成長到幾乎是 1992 年的五倍。"
+    },
+    {
+      "id": "tr9",
+      "type": "e2c",
+      "source": "This invasion of visitors has resulted in various problems.",
+      "answer": "這波遊客的湧入造成了各式各樣的問題。"
+    },
+    {
+      "id": "tr10",
+      "type": "e2c",
+      "source": "Only after the authorities have developed sustainable solutions will overtourism be manageable.",
+      "answer": "只有在當局發展出永續的解決方案之後，過度旅遊才能被控制。"
+    },
+    {
+      "id": "tr11",
+      "type": "e2c",
+      "source": "Local hotels and businesses benefited from this expansion of tourism.",
+      "answer": "當地的旅館與商家從觀光業的擴張中受益。"
+    },
+    {
+      "id": "tr12",
+      "type": "e2c",
+      "source": "Landlords are partial to renting their places out through Airbnb to make more money.",
+      "answer": "房東們偏好透過 Airbnb 出租房屋以賺取更多錢。"
+    }
+  ],
+
+  "vocabulary": [
+    {
+      "id": "v1",
+      "question": "Tourists ______ to Barcelona every summer, making the streets very crowded.",
+      "options": ["flock", "decline", "expand", "narrow"],
+      "answer": 0,
+      "explanation": "flock (蜂擁) — 大量遊客成群湧入的最佳動詞。"
+    },
+    {
+      "id": "v2",
+      "question": "The city's quality of life has ______ dramatically due to overtourism.",
+      "options": ["expanded", "declined", "flocked", "licensed"],
+      "answer": 1,
+      "explanation": "decline (衰退) — 生活品質下降。"
+    },
+    {
+      "id": "v3",
+      "question": "The local government took practical ______ to limit the number of tourists.",
+      "options": ["measures", "complaints", "tenants", "options"],
+      "answer": 0,
+      "explanation": "measures (措施) — take measures 採取措施。"
+    },
+    {
+      "id": "v4",
+      "question": "The ______ asked his tenants to keep the noise down at night.",
+      "options": ["tourist", "guide", "landlord", "resident"],
+      "answer": 2,
+      "explanation": "landlord (房東) 對應 tenant (房客)。"
+    },
+    {
+      "id": "v5",
+      "question": "Many residents are fed up ______ visitors' inappropriate behavior.",
+      "options": ["of", "with", "on", "from"],
+      "answer": 1,
+      "explanation": "be fed up with (受夠了) — 固定介系詞 with。"
+    },
+    {
+      "id": "v6",
+      "question": "The careless waiter caused the glass to ______, making the table wet.",
+      "options": ["overflow", "decline", "narrow", "strive"],
+      "answer": 0,
+      "explanation": "overflow (溢出) — 水溢出杯子。"
+    },
+    {
+      "id": "v7",
+      "question": "Mandy is ______ to chocolate, but her sister prefers vanilla.",
+      "options": ["thoughtless", "partial", "narrow", "thorough"],
+      "answer": 1,
+      "explanation": "be partial to (偏愛) = like very much。"
+    },
+    {
+      "id": "v8",
+      "question": "The doctor explained the ______ of the patient's injuries.",
+      "options": ["expansion", "option", "extent", "rent"],
+      "answer": 2,
+      "explanation": "extent (程度) — the extent of injuries 傷勢嚴重程度。"
+    },
+    {
+      "id": "v9",
+      "question": "Alice ______ to become the fastest runner by practicing every day.",
+      "options": ["strove", "declined", "rented", "complained"],
+      "answer": 0,
+      "explanation": "strive—strove—striven (努力)。"
+    },
+    {
+      "id": "v10",
+      "question": "Chronic overwork will have a ______ impact on one's health.",
+      "options": ["positive", "negative", "partial", "optional"],
+      "answer": 1,
+      "explanation": "negative impact (負面影響)。"
+    },
+    {
+      "id": "v11",
+      "question": "It was very ______ of Jim to eat all the pizza without asking the others.",
+      "options": ["thoughtful", "thoughtless", "thorough", "partial"],
+      "answer": 1,
+      "explanation": "thoughtless (粗心)，反義詞為 thoughtful (體貼)。"
+    },
+    {
+      "id": "v12",
+      "question": "Ron passed the test and finally got his driver's ______.",
+      "options": ["measure", "license", "option", "rent"],
+      "answer": 1,
+      "explanation": "license (執照) — driver's license 駕照。"
+    },
+    {
+      "id": "v13",
+      "question": "Barry has many ______ when choosing which university to attend.",
+      "options": ["options", "tenants", "complaints", "invasions"],
+      "answer": 0,
+      "explanation": "option (選擇)，許多選擇 = many options。"
+    },
+    {
+      "id": "v14",
+      "question": "The report was very ______; it examined every detail of the issue.",
+      "options": ["narrow", "negative", "thorough", "partial"],
+      "answer": 2,
+      "explanation": "thorough (徹底的、全面的)。"
+    },
+    {
+      "id": "v15",
+      "question": "Barcelona receives more than fifteen times ______ many visitors ______ its actual population.",
+      "options": ["so / as", "as / as", "such / as", "more / than"],
+      "answer": 1,
+      "explanation": "倍數句型：N times as + adj/adv + as。"
+    },
+    {
+      "id": "v16",
+      "question": "Only by introducing practical measures ______ the impact of overtourism be reduced.",
+      "options": ["the impact can", "can", "the impact", "it can"],
+      "answer": 1,
+      "explanation": "Only + 副詞片語在句首 → 主詞與助動詞倒裝。"
+    },
+    {
+      "id": "v17",
+      "question": "The 1992 Olympics put Barcelona on the tourist ______.",
+      "options": ["map", "list", "trip", "plan"],
+      "answer": 0,
+      "explanation": "put... on the map (使...為人所知) — 慣用語。"
+    },
+    {
+      "id": "v18",
+      "question": "Tourism is often described as a double-edged ______.",
+      "options": ["coin", "sword", "knife", "blade"],
+      "answer": 1,
+      "explanation": "double-edged sword (雙面刃) — 課文標題隱喻。"
+    }
+  ]
+}

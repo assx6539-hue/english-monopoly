@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f0e17">
+  <meta name="description" content="英文大富翁 — 高中英文教學 PWA 遊戲">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.json">
+  <title>🎲 英文大富翁</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Floating action buttons -->
+<div class="floating-btns">
+  <button id="sound-btn" class="sound-btn" title="音效開關">🔊</button>
+  <button id="fs-btn"    class="fs-btn"    title="全螢幕 (F11)">⛶</button>
+</div>
+
+<!-- ============================================================
+     SETUP SCREEN
+     ============================================================ -->
+<div id="setup-screen" class="screen active">
+  <div class="setup-card">
+    <div class="setup-header">
+      <div class="logo">🎲</div>
+      <h1>英文大富翁</h1>
+      <p class="subtitle">高中英文教學版 · 36 格棋盤<br>繞完一圈回到起點即獲勝！</p>
+    </div>
+
+    <div class="setup-body">
+      <div class="form-group">
+        <label>玩家人數</label>
+        <div class="player-count-btns">
+          <button class="count-btn active" data-count="2">2 人</button>
+          <button class="count-btn" data-count="3">3 人</button>
+          <button class="count-btn" data-count="4">4 人</button>
+          <button class="count-btn" data-count="5">5 人</button>
+          <button class="count-btn" data-count="6">6 人</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>玩家名稱（動物頭像對應顏色）</label>
+        <div id="player-inputs" class="player-inputs"></div>
+      </div>
+
+      <div class="form-group">
+        <label>玩法說明</label>
+        <div style="font-size:1rem;color:#b8bad0;line-height:1.7">
+          • 輪流擲骰子，依點數前進<br>
+          • 答對 / 答錯都會輪到下一位玩家<br>
+          • <strong>答錯只停留原地，不會退格</strong><br>
+          • 只有抽到機會 / 命運卡才可能退格<br>
+          • <strong>最先繞完一圈回到起點者獲勝 🏆</strong>
+        </div>
+      </div>
+
+      <button id="start-btn" class="btn btn-primary btn-lg">開始遊戲 🎮</button>
+      <button id="edit-q-btn" class="btn btn-ghost btn-lg" style="margin-top:0.6rem">
+        ✏️ 老師專區：編輯題目
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     GAME SCREEN
+     ============================================================ -->
+<div id="game-screen" class="screen">
+  <div class="game-layout">
+
+    <div class="board-wrapper">
+      <div id="board-grid" class="board-grid"></div>
+    </div>
+
+    <div class="sidebar">
+      <div id="players-panel" class="players-panel"></div>
+
+      <div class="action-panel">
+        <div id="turn-info" class="turn-info">
+          <div class="turn-label">輪到</div>
+          <div class="turn-name">—</div>
+        </div>
+
+        <button id="roll-btn" class="btn-roll" disabled>
+          <span class="dice-icon">🎲</span>
+          <span>擲骰子</span>
+        </button>
+
+        <div id="roll-result" class="roll-result hidden"></div>
+
+        <div class="rule-row">
+          <span>📝 造句</span>
+          <span>🔄 句型</span>
+          <span>🌏 翻譯</span>
+          <span>✏️ 單字</span>
+          <span>❓ 機會</span>
+          <span>💫 命運</span>
+        </div>
+
+        <div class="game-log">
+          <div class="log-title">📋 遊戲記錄</div>
+          <div id="log-entries" class="log-entries"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     QUESTION MODAL
+     ============================================================ -->
+<div id="question-modal" class="modal-overlay hidden">
+  <div class="modal-card">
+
+    <div class="modal-header">
+      <div id="q-type-badge" class="type-badge">📝 造句題</div>
+      <div class="timer">
+        <div class="timer-bar-wrap">
+          <div id="timer-bar" class="timer-bar" style="width:100%"></div>
+        </div>
+        <span id="timer-count">30</span>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div id="q-content" class="question-content"></div>
+      <div id="q-input-area" class="input-area"></div>
+    </div>
+
+    <div id="q-answer-reveal" class="answer-reveal hidden">
+      <div class="answer-title">✅ 參考答案</div>
+      <div id="q-answer-text" class="answer-text"></div>
+    </div>
+
+    <div id="q-footer" class="modal-footer">
+      <button id="q-submit-btn" class="btn btn-primary">提交答案</button>
+      <div id="q-judge-btns" class="judge-btns hidden">
+        <button id="q-correct-btn" class="btn btn-correct">✅ 答對了！</button>
+        <button id="q-wrong-btn"   class="btn btn-wrong">❌ 答錯了</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ============================================================
+     CARD MODAL
+     ============================================================ -->
+<div id="card-modal" class="modal-overlay hidden">
+  <div class="modal-card card-modal-card">
+
+    <div class="card-flip-container">
+      <div class="card-back">
+        <div id="card-back-icon">❓</div>
+        <div class="card-back-text">機會卡</div>
+      </div>
+      <div id="card-front" class="card-front hidden">
+        <div id="card-icon"  class="card-icon"></div>
+        <div id="card-title" class="card-title"></div>
+        <div id="card-desc"  class="card-desc"></div>
+      </div>
+    </div>
+
+    <button id="card-flip-btn" class="btn btn-primary" style="width:100%">翻牌 🃏</button>
+    <button id="card-ok-btn"   class="btn btn-primary hidden" style="width:100%;margin-top:0.5rem">確認執行 ✓</button>
+
+  </div>
+</div>
+
+
+<!-- ============================================================
+     JAIL MODAL
+     ============================================================ -->
+<div id="jail-modal" class="modal-overlay hidden">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="type-badge jail-badge">🚔 進入監獄</div>
+    </div>
+    <div class="modal-body" style="padding:1rem 0">
+      <p style="text-align:center;font-size:1.2rem;line-height:1.8">
+        <strong id="jail-player-name" style="color:#ef4444;font-size:1.4rem"></strong> 進入監獄！<br>
+        選擇暫停一回合，<br>
+        或答對困難題（句型轉換）立即出獄。
+      </p>
+    </div>
+    <div class="modal-footer" style="flex-direction:row">
+      <button id="jail-skip-btn"      class="btn btn-wrong"   style="flex:1">💤 暫停一回合</button>
+      <button id="jail-challenge-btn" class="btn btn-primary" style="flex:1">⚡ 接受挑戰！</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     WIN MODAL
+     ============================================================ -->
+<div id="win-modal" class="modal-overlay hidden">
+  <div class="modal-card win-modal-card">
+    <div class="win-animation">🏆</div>
+    <h2 id="win-title" class="win-title">玩家 1 獲勝！</h2>
+    <div id="final-scores" class="final-scores"></div>
+    <div id="answer-report"
+         style="background:rgba(255,255,255,0.04);border-radius:12px;padding:0.85rem 1rem;margin-bottom:1.5rem"></div>
+    <button id="restart-btn" class="btn btn-primary btn-lg">再玩一次 🎮</button>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     EDITOR MODAL (Teacher)
+     ============================================================ -->
+<div id="editor-modal" class="modal-overlay hidden">
+  <div class="modal-card" style="width:min(720px,95vw)">
+
+    <div class="modal-header" style="margin-bottom:0.8rem">
+      <div class="type-badge">✏️ 老師專區：題庫編輯</div>
+      <button class="icon-btn" id="editor-close-btn" style="width:36px;height:36px;font-size:1.1rem">✕</button>
+    </div>
+
+    <div class="editor-toolbar">
+      <button class="btn btn-ghost"  id="editor-import-btn">📥 匯入 JSON</button>
+      <button class="btn btn-ghost"  id="editor-export-btn">📤 匯出 JSON</button>
+      <button class="btn btn-danger" id="editor-reset-btn">🔄 恢復預設</button>
+    </div>
+
+    <div class="editor-tabs">
+      <button class="tab-btn active" data-tab="sentence">📝 造句</button>
+      <button class="tab-btn"        data-tab="transform">🔄 句型</button>
+      <button class="tab-btn"        data-tab="translation">🌏 翻譯</button>
+      <button class="tab-btn"        data-tab="vocabulary">✏️ 單字</button>
+    </div>
+
+    <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.4rem">📚 現有題目（點 ✏️ 編輯，🗑️ 刪除）</div>
+    <div id="editor-list" class="editor-list"></div>
+
+    <button class="btn btn-primary" id="editor-add-btn" style="width:100%;margin-bottom:1rem">
+      ➕ 新增題目
+    </button>
+
+    <div id="editor-form" class="editor-form"></div>
+
+    <div style="font-size:0.8rem;color:var(--text-muted);text-align:center;padding-top:0.5rem;border-top:1px solid var(--border)">
+      💡 變更會自動儲存在本機。可匯出 JSON 備份或分享給其他老師。
+    </div>
+
+  </div>
+</div>
+
+
+<script src="js/game.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+  }
+</script>
+</body>
+</html>
