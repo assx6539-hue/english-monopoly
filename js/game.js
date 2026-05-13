@@ -53,6 +53,33 @@ const BOARD = [
   {id:35, type:'translation', emoji:'🌏', label:'翻譯'},
 ];
 
+// Snapshot defaults (used to reset before each game's random mechanism placement)
+const DEFAULT_BOARD = JSON.parse(JSON.stringify(BOARD));
+
+// At each game start, randomly place ONE extra mechanism tile (機會/命運/監獄)
+// somewhere on each side — so every side has exactly one mid-side mechanism.
+function shuffleSideMechanisms() {
+  // Reset every square to its default question type first
+  for (let i = 0; i < DEFAULT_BOARD.length; i++) BOARD[i] = { ...DEFAULT_BOARD[i] };
+
+  const SIDES = [
+    [1, 2, 3, 4, 5, 6, 7, 8],          // bottom row (between START and 機會)
+    [10,11,12,13,14,15,16,17],         // right column (between 機會 and 命運)
+    [19,20,21,22,23,24,25,26],         // top row (between 命運 and 監獄)
+    [28,29,30,31,32,33,34,35],         // left column (between 監獄 and START)
+  ];
+  const MECHS = [
+    {type:'chance',  emoji:'❓', label:'機會'},
+    {type:'destiny', emoji:'💫', label:'命運'},
+    {type:'jail',    emoji:'🚔', label:'監獄'},
+  ];
+  SIDES.forEach(side => {
+    const pos  = side[Math.floor(Math.random() * side.length)];
+    const mech = MECHS[Math.floor(Math.random() * MECHS.length)];
+    BOARD[pos] = { id: pos, ...mech };
+  });
+}
+
 const GRID_POS = {
   0:[10,1], 1:[10,2], 2:[10,3], 3:[10,4], 4:[10,5],
   5:[10,6], 6:[10,7], 7:[10,8], 8:[10,9], 9:[10,10],
@@ -489,6 +516,9 @@ async function startGame() {
   document.getElementById('setup-screen').classList.remove('active');
   document.getElementById('game-screen').classList.add('active');
 
+  // Randomly place one extra mechanism per side (different each game)
+  shuffleSideMechanisms();
+
   buildBoard();
   renderTokens();
   renderPlayers();
@@ -920,6 +950,23 @@ function executeCardEffect() {
       Sound.flip();
       addLog(`${p.name} 與 ${next.name} 交換位置！🔄`);
       renderTokens(); renderPlayers();
+      nextTurn();
+      return;
+    }
+
+    case 'shufflePositions': {
+      // 大風吹：全體玩家位置大洗牌
+      const positions = G.players.map(pl => pl.position);
+      // Fisher-Yates shuffle
+      for (let i = positions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [positions[i], positions[j]] = [positions[j], positions[i]];
+      }
+      G.players.forEach((pl, idx) => { pl.position = positions[idx]; });
+      Sound.flip(); Sound.flip();
+      addLog(`🌀 大風吹！全體玩家位置大洗牌！`, true);
+      renderTokens(); renderPlayers();
+      highlightCurrentSquare(p.position);
       nextTurn();
       return;
     }

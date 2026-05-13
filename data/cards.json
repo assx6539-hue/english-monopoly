@@ -13,7 +13,8 @@
     {"id":"d3","icon":"😢","title":"踩到石頭","desc":"退後 2 格⋯","effect":"back","value":2},
     {"id":"d4","icon":"😴","title":"讓人暫停","desc":"指定一位玩家暫停一回合！","effect":"skipOther","value":0},
     {"id":"d5","icon":"📖","title":"翻譯挑戰","desc":"翻譯一段課文片段，答對前進 3 格，答錯退後 2 格！","effect":"hardTranslation","value":0},
-    {"id":"d6","icon":"🌧️","title":"下大雨","desc":"路況不好，退後 1 格⋯","effect":"back","value":1}
+    {"id":"d6","icon":"🌧️","title":"下大雨","desc":"路況不好，退後 1 格⋯","effect":"back","value":1},
+    {"id":"d7","icon":"🌀","title":"大風吹","desc":"全體玩家位置大洗牌！所有人的位置會隨機交換！","effect":"shufflePositions","value":0}
   ],
   "knowledgeQuestions": [
     {"q":"What is the plural of 'criterion'?","a":"criteria"},
