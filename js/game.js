@@ -2,52 +2,55 @@
 // English Monopoly PWA — game.js (v3: animals + sound + editor)
 // ========================================================
 
-// Board layout (v4):
-//   Corner 0  = START     (bottom-left)
-//   Side 1-8  = 造句       (bottom row, 8 squares)
-//   Corner 9  = 機會       (bottom-right)
-//   Side 10-17 = 句型      (right column, 8 squares)
-//   Corner 18 = 命運       (top-right)
-//   Side 19-26 = 翻譯      (top row, 8 squares)
-//   Corner 27 = 監獄       (top-left)
-//   Side 28-35 = 單字      (left column, 8 squares)
+// Board layout (v5):
+//   4 corners ONLY have special mechanism tiles:
+//     0  = START 🏁    (bottom-left)
+//     9  = 機會 ❓     (bottom-right)
+//     18 = 命運 💫     (top-right)
+//     27 = 監獄 🚔     (top-left)
+//   32 side squares = balanced mix of 4 question types (8 each)
+//     Each side has all 4 types appearing 2 times → variety on every row
 const BOARD = [
   {id:0,  type:'start',       emoji:'🏁', label:'START'},
+  // Bottom row 1-8: 造句, 句型, 翻譯, 單字, 造句, 句型, 翻譯, 單字
   {id:1,  type:'sentence',    emoji:'📝', label:'造句'},
-  {id:2,  type:'sentence',    emoji:'📝', label:'造句'},
-  {id:3,  type:'sentence',    emoji:'📝', label:'造句'},
-  {id:4,  type:'sentence',    emoji:'📝', label:'造句'},
+  {id:2,  type:'transform',   emoji:'🔄', label:'句型'},
+  {id:3,  type:'translation', emoji:'🌏', label:'翻譯'},
+  {id:4,  type:'vocabulary',  emoji:'✏️', label:'單字'},
   {id:5,  type:'sentence',    emoji:'📝', label:'造句'},
-  {id:6,  type:'sentence',    emoji:'📝', label:'造句'},
-  {id:7,  type:'sentence',    emoji:'📝', label:'造句'},
-  {id:8,  type:'sentence',    emoji:'📝', label:'造句'},
+  {id:6,  type:'transform',   emoji:'🔄', label:'句型'},
+  {id:7,  type:'translation', emoji:'🌏', label:'翻譯'},
+  {id:8,  type:'vocabulary',  emoji:'✏️', label:'單字'},
   {id:9,  type:'chance',      emoji:'❓', label:'機會'},
+  // Right col 10-17: 句型, 翻譯, 單字, 造句, 句型, 翻譯, 單字, 造句
   {id:10, type:'transform',   emoji:'🔄', label:'句型'},
-  {id:11, type:'transform',   emoji:'🔄', label:'句型'},
-  {id:12, type:'transform',   emoji:'🔄', label:'句型'},
-  {id:13, type:'transform',   emoji:'🔄', label:'句型'},
+  {id:11, type:'translation', emoji:'🌏', label:'翻譯'},
+  {id:12, type:'vocabulary',  emoji:'✏️', label:'單字'},
+  {id:13, type:'sentence',    emoji:'📝', label:'造句'},
   {id:14, type:'transform',   emoji:'🔄', label:'句型'},
-  {id:15, type:'transform',   emoji:'🔄', label:'句型'},
-  {id:16, type:'transform',   emoji:'🔄', label:'句型'},
-  {id:17, type:'transform',   emoji:'🔄', label:'句型'},
+  {id:15, type:'translation', emoji:'🌏', label:'翻譯'},
+  {id:16, type:'vocabulary',  emoji:'✏️', label:'單字'},
+  {id:17, type:'sentence',    emoji:'📝', label:'造句'},
   {id:18, type:'destiny',     emoji:'💫', label:'命運'},
+  // Top row 19-26: 翻譯, 單字, 造句, 句型, 翻譯, 單字, 造句, 句型
   {id:19, type:'translation', emoji:'🌏', label:'翻譯'},
-  {id:20, type:'translation', emoji:'🌏', label:'翻譯'},
-  {id:21, type:'translation', emoji:'🌏', label:'翻譯'},
-  {id:22, type:'translation', emoji:'🌏', label:'翻譯'},
+  {id:20, type:'vocabulary',  emoji:'✏️', label:'單字'},
+  {id:21, type:'sentence',    emoji:'📝', label:'造句'},
+  {id:22, type:'transform',   emoji:'🔄', label:'句型'},
   {id:23, type:'translation', emoji:'🌏', label:'翻譯'},
-  {id:24, type:'translation', emoji:'🌏', label:'翻譯'},
-  {id:25, type:'translation', emoji:'🌏', label:'翻譯'},
-  {id:26, type:'translation', emoji:'🌏', label:'翻譯'},
+  {id:24, type:'vocabulary',  emoji:'✏️', label:'單字'},
+  {id:25, type:'sentence',    emoji:'📝', label:'造句'},
+  {id:26, type:'transform',   emoji:'🔄', label:'句型'},
   {id:27, type:'jail',        emoji:'🚔', label:'監獄'},
+  // Left col 28-35: 單字, 造句, 句型, 翻譯, 單字, 造句, 句型, 翻譯
   {id:28, type:'vocabulary',  emoji:'✏️', label:'單字'},
-  {id:29, type:'vocabulary',  emoji:'✏️', label:'單字'},
-  {id:30, type:'vocabulary',  emoji:'✏️', label:'單字'},
-  {id:31, type:'vocabulary',  emoji:'✏️', label:'單字'},
+  {id:29, type:'sentence',    emoji:'📝', label:'造句'},
+  {id:30, type:'transform',   emoji:'🔄', label:'句型'},
+  {id:31, type:'translation', emoji:'🌏', label:'翻譯'},
   {id:32, type:'vocabulary',  emoji:'✏️', label:'單字'},
-  {id:33, type:'vocabulary',  emoji:'✏️', label:'單字'},
-  {id:34, type:'vocabulary',  emoji:'✏️', label:'單字'},
-  {id:35, type:'vocabulary',  emoji:'✏️', label:'單字'},
+  {id:33, type:'sentence',    emoji:'📝', label:'造句'},
+  {id:34, type:'transform',   emoji:'🔄', label:'句型'},
+  {id:35, type:'translation', emoji:'🌏', label:'翻譯'},
 ];
 
 const GRID_POS = {
