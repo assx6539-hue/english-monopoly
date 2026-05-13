@@ -2,43 +2,52 @@
 // English Monopoly PWA — game.js (v3: animals + sound + editor)
 // ========================================================
 
+// Board layout (v4):
+//   Corner 0  = START     (bottom-left)
+//   Side 1-8  = 造句       (bottom row, 8 squares)
+//   Corner 9  = 機會       (bottom-right)
+//   Side 10-17 = 句型      (right column, 8 squares)
+//   Corner 18 = 命運       (top-right)
+//   Side 19-26 = 翻譯      (top row, 8 squares)
+//   Corner 27 = 監獄       (top-left)
+//   Side 28-35 = 單字      (left column, 8 squares)
 const BOARD = [
   {id:0,  type:'start',       emoji:'🏁', label:'START'},
   {id:1,  type:'sentence',    emoji:'📝', label:'造句'},
-  {id:2,  type:'transform',   emoji:'🔄', label:'句型'},
-  {id:3,  type:'translation', emoji:'🌏', label:'翻譯'},
-  {id:4,  type:'vocabulary',  emoji:'✏️', label:'單字'},
+  {id:2,  type:'sentence',    emoji:'📝', label:'造句'},
+  {id:3,  type:'sentence',    emoji:'📝', label:'造句'},
+  {id:4,  type:'sentence',    emoji:'📝', label:'造句'},
   {id:5,  type:'sentence',    emoji:'📝', label:'造句'},
-  {id:6,  type:'chance',      emoji:'❓', label:'機會'},
-  {id:7,  type:'transform',   emoji:'🔄', label:'句型'},
-  {id:8,  type:'vocabulary',  emoji:'✏️', label:'單字'},
-  {id:9,  type:'translation', emoji:'🌏', label:'翻譯'},
-  {id:10, type:'jail',        emoji:'🚔', label:'坐牢'},
-  {id:11, type:'hospital',    emoji:'🏥', label:'醫院'},
-  {id:12, type:'destiny',     emoji:'💫', label:'命運'},
-  {id:13, type:'sentence',    emoji:'📝', label:'造句'},
-  {id:14, type:'translation', emoji:'🌏', label:'翻譯'},
+  {id:6,  type:'sentence',    emoji:'📝', label:'造句'},
+  {id:7,  type:'sentence',    emoji:'📝', label:'造句'},
+  {id:8,  type:'sentence',    emoji:'📝', label:'造句'},
+  {id:9,  type:'chance',      emoji:'❓', label:'機會'},
+  {id:10, type:'transform',   emoji:'🔄', label:'句型'},
+  {id:11, type:'transform',   emoji:'🔄', label:'句型'},
+  {id:12, type:'transform',   emoji:'🔄', label:'句型'},
+  {id:13, type:'transform',   emoji:'🔄', label:'句型'},
+  {id:14, type:'transform',   emoji:'🔄', label:'句型'},
   {id:15, type:'transform',   emoji:'🔄', label:'句型'},
-  {id:16, type:'vocabulary',  emoji:'✏️', label:'單字'},
-  {id:17, type:'sentence',    emoji:'📝', label:'造句'},
-  {id:18, type:'chance',      emoji:'❓', label:'機會'},
-  {id:19, type:'transform',   emoji:'🔄', label:'句型'},
+  {id:16, type:'transform',   emoji:'🔄', label:'句型'},
+  {id:17, type:'transform',   emoji:'🔄', label:'句型'},
+  {id:18, type:'destiny',     emoji:'💫', label:'命運'},
+  {id:19, type:'translation', emoji:'🌏', label:'翻譯'},
   {id:20, type:'translation', emoji:'🌏', label:'翻譯'},
-  {id:21, type:'vocabulary',  emoji:'✏️', label:'單字'},
-  {id:22, type:'sentence',    emoji:'📝', label:'造句'},
-  {id:23, type:'destiny',     emoji:'💫', label:'命運'},
-  {id:24, type:'transform',   emoji:'🔄', label:'句型'},
+  {id:21, type:'translation', emoji:'🌏', label:'翻譯'},
+  {id:22, type:'translation', emoji:'🌏', label:'翻譯'},
+  {id:23, type:'translation', emoji:'🌏', label:'翻譯'},
+  {id:24, type:'translation', emoji:'🌏', label:'翻譯'},
   {id:25, type:'translation', emoji:'🌏', label:'翻譯'},
-  {id:26, type:'sentence',    emoji:'📝', label:'造句'},
-  {id:27, type:'vocabulary',  emoji:'✏️', label:'單字'},
-  {id:28, type:'transform',   emoji:'🔄', label:'句型'},
-  {id:29, type:'translation', emoji:'🌏', label:'翻譯'},
+  {id:26, type:'translation', emoji:'🌏', label:'翻譯'},
+  {id:27, type:'jail',        emoji:'🚔', label:'監獄'},
+  {id:28, type:'vocabulary',  emoji:'✏️', label:'單字'},
+  {id:29, type:'vocabulary',  emoji:'✏️', label:'單字'},
   {id:30, type:'vocabulary',  emoji:'✏️', label:'單字'},
-  {id:31, type:'sentence',    emoji:'📝', label:'造句'},
-  {id:32, type:'transform',   emoji:'🔄', label:'句型'},
-  {id:33, type:'translation', emoji:'🌏', label:'翻譯'},
-  {id:34, type:'sentence',    emoji:'📝', label:'造句'},
-  {id:35, type:'transform',   emoji:'🔄', label:'句型'},
+  {id:31, type:'vocabulary',  emoji:'✏️', label:'單字'},
+  {id:32, type:'vocabulary',  emoji:'✏️', label:'單字'},
+  {id:33, type:'vocabulary',  emoji:'✏️', label:'單字'},
+  {id:34, type:'vocabulary',  emoji:'✏️', label:'單字'},
+  {id:35, type:'vocabulary',  emoji:'✏️', label:'單字'},
 ];
 
 const GRID_POS = {
@@ -150,27 +159,99 @@ const Sound = {
 
   turn() { this.tone(660, 0.1, 'sine', 0.12); },
 
-  // ---- Background Music: simple looping melody ----
-  bgmMelody: [
-    {f: 523, d: 0.25}, {f: 587, d: 0.25}, {f: 659, d: 0.5},
-    {f: 587, d: 0.25}, {f: 523, d: 0.25}, {f: 440, d: 0.5},
-    {f: 523, d: 0.25}, {f: 587, d: 0.25}, {f: 659, d: 0.25}, {f: 698, d: 0.25},
-    {f: 784, d: 0.5},  {f: 659, d: 0.5},
-  ],
+  // ---- Drum kick (low punchy thump) ----
+  kick() {
+    if (!this.enabled || !this.ctx) return;
+    const t = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(160, t);
+    osc.frequency.exponentialRampToValueAtTime(45, t + 0.1);
+    gain.gain.setValueAtTime(0.32, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+    osc.connect(gain).connect(this.masterGain);
+    osc.start(t); osc.stop(t + 0.12);
+  },
+
+  // ---- Hi-hat snap (noise burst) ----
+  hat() {
+    if (!this.enabled || !this.ctx) return;
+    const t = this.ctx.currentTime;
+    const bufferSize = 4096;
+    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+    const noise = this.ctx.createBufferSource();
+    noise.buffer = buffer;
+    const hp = this.ctx.createBiquadFilter();
+    hp.type = 'highpass'; hp.frequency.value = 7000;
+    const gain = this.ctx.createGain();
+    gain.gain.setValueAtTime(0.08, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
+    noise.connect(hp).connect(gain).connect(this.masterGain);
+    noise.start(t); noise.stop(t + 0.05);
+  },
+
+  // ---- Exciting BGM: 16-step pattern with drums + bass + melody ----
+  // Adventure / RPG video-game style. Tempo ~140 BPM (16th notes = 107ms)
+  bgmStep: 0,
+  bgmPattern: {
+    // Melody (16 steps × 4 bars = 64 steps), 0 = rest
+    melody: [
+      // Bar 1 — C major heroic motif
+      784, 0,   880, 0,   988, 0,   1047,0,
+      988, 880, 784, 0,   698, 784, 880, 0,
+      // Bar 2 — descend then climb
+      1047,0,   988, 0,   880, 0,   784, 0,
+      698, 0,   784, 880, 988, 1047,1175,0,
+      // Bar 3 — energetic arpeggio
+      1319,0,   1175,1047,988, 1047,880, 0,
+      784, 880, 988, 880, 784, 698, 659, 0,
+      // Bar 4 — turnaround
+      587, 659, 698, 784, 880, 988, 1047,1175,
+      1047,988, 880, 784, 698, 659, 587, 0,
+    ],
+    // Bass: alternating root/fifth (low octave)
+    bass: [
+      131, 0,  131, 0,  131, 0,  131, 0,    // C
+      131, 0,  131, 0,  98,  0,  98,  0,    // C, G
+      87,  0,  87,  0,  87,  0,  87,  0,    // F
+      98,  0,  98,  0,  98,  0,  98,  0,    // G
+      131, 0,  131, 0,  165, 0,  165, 0,    // C, E
+      131, 0,  131, 0,  131, 0,  131, 0,    // C
+      87,  0,  87,  0,  98,  0,  98,  0,    // F, G
+      131, 0,  131, 0,  131, 0,  131, 0,    // C
+    ],
+    // Drums: 1 = kick, 2 = hat, 0 = rest
+    drums: [
+      1,0,2,0, 1,0,2,0, 1,0,2,0, 1,0,2,0,
+      1,0,2,0, 1,0,2,0, 1,0,2,0, 1,2,2,0,
+      1,0,2,0, 1,0,2,0, 1,0,2,0, 1,0,2,0,
+      1,0,2,0, 1,0,2,0, 1,0,2,0, 1,2,1,2,
+    ],
+  },
 
   playBgm() {
     if (!this.enabled || !this.bgmEnabled || !this.ctx) return;
     this.stopBgm();
-    let i = 0;
-    const playNext = () => {
+    const STEP_MS = 107;  // ~140 BPM 16th notes
+    const STEP_SEC = STEP_MS / 1000;
+    this.bgmStep = 0;
+    const tick = () => {
       if (!this.bgmEnabled || !this.enabled) return;
-      const note = this.bgmMelody[i % this.bgmMelody.length];
-      this.tone(note.f, note.d * 0.9, 'triangle', 0.05);
-      this.tone(note.f / 2, note.d * 0.9, 'sine', 0.04);  // bass
-      i++;
-      this.bgmTimer = setTimeout(playNext, note.d * 1000);
+      const i = this.bgmStep % this.bgmPattern.melody.length;
+      const m = this.bgmPattern.melody[i];
+      const b = this.bgmPattern.bass[i];
+      const d = this.bgmPattern.drums[i];
+      if (m) this.tone(m, STEP_SEC * 0.9, 'square',   0.045);
+      if (b) this.tone(b, STEP_SEC * 1.5, 'triangle', 0.10);
+      if (d === 1) this.kick();
+      else if (d === 2) this.hat();
+      this.bgmStep++;
+      this.bgmTimer = setTimeout(tick, STEP_MS);
     };
-    playNext();
+    tick();
   },
 
   stopBgm() {
@@ -391,6 +472,7 @@ async function startGame() {
   G.players = Array.from(inputs).map((inp, i) => ({
     name: inp.value.trim() || `玩家${i + 1}`,
     position: 0,
+    rollStartPos: 0,  // ← position BEFORE this roll (for wrong-answer rollback)
     skipTurn: false,
     immunityCards: 0,
     laps: 0,
@@ -433,6 +515,9 @@ function rollDice() {
     nextTurn();
     return;
   }
+
+  // Remember where the player WAS before this roll — for "wrong answer reverts" rule
+  p.rollStartPos = p.position;
 
   G.phase = 'rolling';
   setRollEnabled(false);
@@ -714,7 +799,18 @@ function handleWrong() {
   const p = cp();
   p.wrongCount++;
   Sound.wrong();
-  addLog(`${p.name} 答錯了，停留原地 ❌`);
+
+  // Revert to position BEFORE this roll
+  const target = p.rollStartPos ?? p.position;
+  if (p.position !== target) {
+    p.position = target;
+    renderTokens();
+    highlightCurrentSquare(target);
+    addLog(`${p.name} 答錯了，退回第 ${target} 格 ❌`);
+  } else {
+    addLog(`${p.name} 答錯了 ❌`);
+  }
+
   renderPlayers();
   updateTurnInfo();
   nextTurn();
