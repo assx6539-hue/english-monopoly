@@ -256,8 +256,31 @@
 
 <script src="js/game.js"></script>
 <script>
+  // Auto-updating service worker: silently reload when a new version is deployed
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+    navigator.serviceWorker.register('./service-worker.js').then(reg => {
+      // Check for updates every time the page is visible
+      reg.update();
+      setInterval(() => reg.update(), 60 * 1000);  // also poll every 60s
+
+      reg.addEventListener('updatefound', () => {
+        const newWorker = reg.installing;
+        if (!newWorker) return;
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            // New version waiting — activate and reload
+            newWorker.postMessage('SKIP_WAITING');
+          }
+        });
+      });
+
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (refreshing) return;
+        refreshing = true;
+        location.reload();
+      });
+    }).catch(() => {});
   }
 </script>
 </body>
